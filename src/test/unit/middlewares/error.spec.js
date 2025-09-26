@@ -21,6 +21,7 @@ describe('Error middleware', () => {
     expect(res.json).toHaveBeenCalledWith({
       code: 'DOCUMENT_ALREADY_EXISTS',
       status: 409,
+      // eslint-disable-next-line quotes
       message: "'name' field(s) must be unique."
     })
   })
