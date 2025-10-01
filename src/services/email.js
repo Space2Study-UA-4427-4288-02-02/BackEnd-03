@@ -7,7 +7,9 @@ const {
 const { createError } = require('~/utils/errorsHelper')
 const { TEMPLATE_NOT_FOUND } = require('~/consts/errors')
 
-const emailTemplates = new EmailTemplates()
+const emailTemplates = new EmailTemplates({
+  views: { root: 'src/emails/' }
+})
 
 const emailService = {
   sendEmail: async (email, subject, language, text = {}) => {

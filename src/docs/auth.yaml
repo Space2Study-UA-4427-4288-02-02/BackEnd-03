@@ -286,3 +286,46 @@ paths:
                 status: 404
                 code: 'USER_NOT_FOUND'
                 message: 'User not found.'
+  /auth/confirm-email:
+    post:
+      tags:
+        - Auth
+      summary: Confirm email
+      description: Confirms the user's email address.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: Provide required data to confirm the email address.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: token
+                required:
+                  - token
+            example:
+              token: abc123
+      responses:
+        204:
+          description: OK
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 400
+                code: 'BAD_CONFIRM_TOKEN'
+                message: 'Invalid confirmation token.'
