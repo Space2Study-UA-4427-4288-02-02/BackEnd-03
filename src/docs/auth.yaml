@@ -1,0 +1,288 @@
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: User registration
+      description: Creates a new user, sends an email to the user and returns user ID and email.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: Provide required data to create a user account.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  description: firstName
+                  example: First
+                lastName:
+                  type: string
+                  description: lastName
+                  example: Last
+                email:
+                  type: string
+                  format: email
+                  description: email
+                  example: aaa@bbb.ccc
+                role:
+                  type: string
+                  description: role
+                  enum:
+                    - student
+                    - tutor
+                    - admin
+                    - superadmin
+                  example: student
+                password:
+                  type: string
+                  description: password
+                  example: Password1@
+              required:
+                - firstName
+                - lastName
+                - email
+                - role
+                - password
+            example:
+              role: student
+              firstName: John
+              lastName: Doe
+              email: johndoe@gmail.com
+              password: qwer1234
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  userEmail:
+                    type: string
+              example:
+                userId: 6255bc080a75adf9223df100
+                userEmail: johndoe@gmail.com
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 400
+                code: 'EMAIL_NOT_SENT'
+                message: 'Email has not been sent.'
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: User login
+      description: Authenticates a user and returns user ID and email.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: Provide required data to log in a user.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: email
+                  example: aaa@bbb.ccc
+                password:
+                  type: string
+                  description: password
+                  example: Password1@
+              required:
+                - email
+                - password
+            example:
+              email: johndoe@gmail.com
+              password: qwer1234
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+              example:
+                accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 401
+                code: 'INCORRECT_CREDENTIALS'
+                message: 'The password you entered is incorrect.'
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: User logout
+      description: Logs out a user.
+      produces:
+        - application/json
+      responses:
+        204:
+          description: OK
+  /auth/refresh:
+    get:
+      tags:
+        - Auth
+      summary: User refresh
+      description: Refreshes the access token for a user.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+              example:
+                accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 400
+                code: 'BAD_REFRESH_TOKEN'
+                message: 'The refresh token is invalid.'
+  /auth/forgot-password:
+    post:
+      tags:
+        - Auth
+      summary: Forgot password
+      description: Sends an email to reset the password.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: Provide required data to reset the password.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: email
+                  example: aaa@bbb.ccc
+              required:
+                - email
+            example:
+              email: johndoe@gmail.com
+      responses:
+        204:
+          description: OK
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 404
+                code: 'USER_NOT_FOUND'
+                message: 'User not found.'
+  /auth/reset-password/{token}:
+    patch:
+      tags:
+        - Auth
+      summary: Reset password
+      description: Resets the user's password.
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Provide required data to reset the password.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: password
+                  example: Password1@
+              required:
+                - password
+            example:
+              password: Password1@
+      responses:
+        204:
+          description: OK
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 404
+                code: 'USER_NOT_FOUND'
+                message: 'User not found.'
