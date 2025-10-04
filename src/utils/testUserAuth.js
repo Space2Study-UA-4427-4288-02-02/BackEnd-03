@@ -1,4 +1,5 @@
 const User = require('~/models/user')
+const { encrypt } = require('~/utils/cryptHelper')
 
 const testUserAuthentication = async (app, testUser = {}) => {
   const qtyOfMandatorySignupFields = 5
@@ -15,7 +16,7 @@ const testUserAuthentication = async (app, testUser = {}) => {
     }
   }
 
-  await User.create({ ...testUser })
+  await User.create({ ...testUser, password: encrypt(testUser.password) })
 
   const loginUserResponse = await app.post('/auth/login').send({ email: testUser.email, password: testUser.password })
 
