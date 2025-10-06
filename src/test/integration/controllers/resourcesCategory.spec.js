@@ -2,6 +2,7 @@ const { serverInit, serverCleanup, stopServer } = require('~/test/setup')
 const { expectError } = require('~/test/helpers')
 const { UNAUTHORIZED, FORBIDDEN } = require('~/consts/errors')
 const testUserAuthentication = require('~/utils/testUserAuth')
+const { encrypt } = require('~/utils/cryptHelper')
 const TokenService = require('~/services/token')
 const {
   roles: { TUTOR }
@@ -18,7 +19,7 @@ const studentUserData = {
   firstName: 'Yamada',
   lastName: 'Kizen',
   email: 'yamakai@gmail.com',
-  password: 'ninpopass',
+  password: encrypt('ninpopass'),
   appLanguage: 'en',
   isEmailConfirmed: true,
   lastLogin: new Date().toJSON(),
@@ -33,7 +34,7 @@ describe('ResourceCategory controller', () => {
   let app, server, accessToken, currentUser, studentAccessToken, testResourceCategory
 
   beforeAll(async () => {
-    ; ({ app, server } = await serverInit())
+    ;({ app, server } = await serverInit())
   })
 
   beforeEach(async () => {
@@ -57,7 +58,7 @@ describe('ResourceCategory controller', () => {
   })
 
   describe(`POST ${endpointUrl}`, () => {
-    it('should create a new reesource category', async () => {
+    it('should create a new resource category', async () => {
       expect(testResourceCategory.statusCode).toBe(201)
       expect(testResourceCategory._body).toMatchObject({
         _id: expect.any(String),

@@ -1,3 +1,4 @@
+const { encrypt } = require('~/utils/cryptHelper')
 const User = require('~/models/user')
 const {
   superAdmin: { firstName, lastName, email, password }
@@ -15,7 +16,7 @@ const SeedSuperAdmin = {
         firstName,
         lastName,
         email,
-        password,
+        password: encrypt(password),
         active: true,
         isEmailConfirmed: true
       }

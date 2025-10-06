@@ -1,3 +1,4 @@
+const { encrypt, compare } = require('~/utils/cryptHelper')
 const tokenService = require('~/services/token')
 const emailService = require('~/services/email')
 const { getUserByEmail, createUser, privateUpdateUser, getUserById } = require('~/services/user')
@@ -17,7 +18,7 @@ const {
 
 const authService = {
   signup: async (role, firstName, lastName, email, password, language) => {
-    const user = await createUser(role, firstName, lastName, email, password, language)
+    const user = await createUser(role, firstName, lastName, email, encrypt(password), language)
 
     const confirmToken = tokenService.generateConfirmToken({ id: user._id, role })
     await tokenService.saveToken(user._id, confirmToken, CONFIRM_TOKEN)
@@ -35,7 +36,7 @@ const authService = {
       throw createError(401, USER_NOT_FOUND)
     }
 
-    const checkedPassword = password === user.password || isFromGoogle
+    const checkedPassword = compare(password, user.password) || isFromGoogle
 
     if (!checkedPassword) {
       throw createError(401, INCORRECT_CREDENTIALS)
@@ -103,7 +104,7 @@ const authService = {
     }
 
     const { id: userId, firstName, email } = tokenData
-    await privateUpdateUser(userId, { password })
+    await privateUpdateUser(userId, { password: encrypt(password) })
 
     await tokenService.removeResetToken(userId)
 
