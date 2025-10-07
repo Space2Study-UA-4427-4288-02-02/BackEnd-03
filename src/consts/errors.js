@@ -127,7 +127,11 @@ const errors = {
   VALIDATION_ERROR: (message) => ({
     code: 'VALIDATION_ERROR',
     message: message
-  })
+  }),
+  NO_FILE_UPLOADED: {
+    code: 'NO_FILE_UPLOADED',
+    message: 'No file uploaded.'
+  }
 }
 
 const validationErrors = {
