@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model, models } = require('mongoose')
 const {
   enums: { APP_LANG_ENUM, SPOKEN_LANG_ENUM, STATUS_ENUM, ROLE_ENUM, LOGIN_ROLE_ENUM }
 } = require('~/consts/validation')
@@ -43,10 +43,16 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, FIELD_CANNOT_BE_EMPTY('password')],
+      required: function () {
+        return !this.isGoogleAccount
+      },
       minLength: [8, FIELD_CANNOT_BE_SHORTER('password', 8)],
       select: false
     },
+    // ✅ додав для Google login
+    googleId: { type: String, select: false },
+    isGoogleAccount: { type: Boolean, default: false },
+    
     address: {
       country: { type: String },
       city: { type: String }
@@ -160,9 +166,7 @@ const userSchema = new Schema(
               type: String,
               required: [true, FIELD_CANNOT_BE_EMPTY('question')],
               validate: {
-                validator: (question) => {
-                  return question.trim().length > 0
-                },
+                validator: (question) => question.trim().length > 0,
                 message: 'Question cannot contain only whitespace'
               }
             },
@@ -170,9 +174,7 @@ const userSchema = new Schema(
               type: String,
               required: [true, FIELD_CANNOT_BE_EMPTY('answer')],
               validate: {
-                validator: (answer) => {
-                  return answer.trim().length > 0
-                },
+                validator: (answer) => answer.trim().length > 0,
                 message: 'Answer cannot contain only whitespace'
               }
             }
@@ -184,9 +186,7 @@ const userSchema = new Schema(
               type: String,
               required: [true, FIELD_CANNOT_BE_EMPTY('question')],
               validate: {
-                validator: (question) => {
-                  return question.trim().length > 0
-                },
+                validator: (question) => question.trim().length > 0,
                 message: 'Question cannot contain only whitespace'
               }
             },
@@ -194,9 +194,7 @@ const userSchema = new Schema(
               type: String,
               required: [true, FIELD_CANNOT_BE_EMPTY('answer')],
               validate: {
-                validator: (answer) => {
-                  return answer.trim().length > 0
-                },
+                validator: (answer) => answer.trim().length > 0,
                 message: 'Answer cannot contain only whitespace'
               }
             }
@@ -214,4 +212,4 @@ const userSchema = new Schema(
   }
 )
 
-module.exports = model(USER, userSchema)
+module.exports = models[USER] || model(USER, userSchema)

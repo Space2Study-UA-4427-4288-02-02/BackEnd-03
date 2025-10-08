@@ -1,5 +1,4 @@
 const router = require('express').Router()
-
 const asyncWrapper = require('~/middlewares/asyncWrapper')
 const validationMiddleware = require('~/middlewares/validation')
 const langMiddleware = require('~/middlewares/appLanguage')
@@ -31,5 +30,7 @@ router.patch(
   langMiddleware,
   asyncWrapper(authController.updatePassword)
 )
+
+router.post('/google', asyncWrapper(authController.googleAuth));
 
 module.exports = router

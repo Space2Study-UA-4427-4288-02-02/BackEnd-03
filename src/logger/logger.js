@@ -4,7 +4,7 @@ require('winston-mongodb')
 
 const {
   config: { MONGODB_URL }
-} = require('~/configs/config')
+} = require('../configs/config');
 
 const logger = createLogger({
   format: combine(

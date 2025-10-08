@@ -1,4 +1,5 @@
 const authService = require('~/services/auth')
+const { createError } = require('~/utils/errorsHelper');
 const { oneDayInMs } = require('~/consts/auth')
 const {
   config: { COOKIE_DOMAIN }
@@ -14,6 +15,18 @@ const COOKIE_OPTIONS = {
   sameSite: 'none',
   domain: COOKIE_DOMAIN
 }
+const googleAuth = async (req, res) => {
+  console.log("GOOGLE AUTH DEBUG:", req.body);
+
+  const { idToken, role } = req.body;
+  if (!idToken) {
+    throw createError(400, "idToken is required");
+  }
+
+  const { user, tokens } = await authService.googleAuth(idToken, role);
+  res.json({ user, tokens });
+};
+
 
 const signup = async (req, res) => {
   const { role, firstName, lastName, email, password } = req.body
@@ -36,7 +49,6 @@ const login = async (req, res) => {
 
   res.status(200).json(tokens)
 }
-
 const logout = async (req, res) => {
   const { refreshToken } = req.cookies
 
@@ -85,10 +97,10 @@ const updatePassword = async (req, res) => {
 
   res.status(204).end()
 }
-
 module.exports = {
   signup,
   login,
+  googleAuth, // додали сюди
   logout,
   refreshAccessToken,
   sendResetPasswordEmail,

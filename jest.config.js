@@ -1,8 +1,5 @@
 module.exports = {
   roots: ['<rootDir>/src/test'],
-  moduleNameMapper: {
-    '^~/(.*)$': '<rootDir>/src/$1'
-  },
   verbose: true,
   testEnvironment: 'node',
   collectCoverage: true,
@@ -25,11 +22,14 @@ module.exports = {
     }
   },
   coverageReporters: ['html', 'lcov'],
-  coverageDirectory: '<rootDir>/src/test/coverage',
+  coverageDirectory: '<rootDir>/coverage',
   testTimeout: 12000,
   testMatch: [
     '<rootDir>/src/test/integration/**/*.spec.js',
     '<rootDir>/src/test/unit/**/*.spec.js'
   ],
-  testResultsProcessor: 'jest-sonar-reporter'
+  testResultsProcessor: 'jest-sonar-reporter',
+  moduleNameMapper: {
+    '^~/(.*)$': '<rootDir>/src/$1',
+  },
 }

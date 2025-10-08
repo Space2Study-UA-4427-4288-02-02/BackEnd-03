@@ -7,8 +7,9 @@ const serverSetup = require('~/initialization/serverSetup')
 
 const serverInit = async () => {
   const app = express()
-  const server = await serverSetup(app)
-  return { app: request(app), server }
+  await serverSetup(app) // тут тільки конфіг, без listen
+  const httpServer = app.listen(0) // піднімаємо тестовий сервер на рандомному порту
+  return { app: request(app), server: httpServer }
 }
 
 const serverCleanup = async () => {
@@ -17,7 +18,9 @@ const serverCleanup = async () => {
 
 const stopServer = async (server) => {
   await mongoose.connection.close()
-  await server.close()
+  await new Promise((resolve, reject) => {
+    server.close(err => (err ? reject(err) : resolve()))
+  })
 }
 
 module.exports = { serverInit, serverCleanup, stopServer }

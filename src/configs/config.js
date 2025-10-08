@@ -1,9 +1,11 @@
+require('dotenv').config()
+
 const config = {
   MONGODB_URL: process.env.MONGODB_URL,
-  CLIENT_URL: process.env.CLIENT_URL,
+  CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:3000',
   COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
-  SERVER_URL: process.env.SERVER_URL,
-  SERVER_PORT: process.env.SERVER_PORT,
+  SERVER_URL: process.env.SERVER_URL || 'http://localhost',
+  SERVER_PORT: process.env.SERVER_PORT || 5000,
   JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET,
   JWT_ACCESS_EXPIRES_IN: process.env.JWT_ACCESS_EXPIRES_IN,
   JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
