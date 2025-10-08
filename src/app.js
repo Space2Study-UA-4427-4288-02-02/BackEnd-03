@@ -1,4 +1,4 @@
-require('module-alias/register');
+require('module-alias/register')
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const serverSetup = require('./initialization/serverSetup')

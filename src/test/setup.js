@@ -19,7 +19,7 @@ const serverCleanup = async () => {
 const stopServer = async (server) => {
   await mongoose.connection.close()
   await new Promise((resolve, reject) => {
-    server.close(err => (err ? reject(err) : resolve()))
+    server.close((err) => (err ? reject(err) : resolve()))
   })
 }
 

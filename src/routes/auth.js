@@ -31,6 +31,6 @@ router.patch(
   asyncWrapper(authController.updatePassword)
 )
 
-router.post('/google', asyncWrapper(authController.googleAuth));
+router.post('/google', asyncWrapper(authController.googleAuth))
 
 module.exports = router

@@ -52,7 +52,7 @@ const userSchema = new Schema(
     // ✅ додав для Google login
     googleId: { type: String, select: false },
     isGoogleAccount: { type: Boolean, default: false },
-    
+
     address: {
       country: { type: String },
       city: { type: String }

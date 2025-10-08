@@ -304,12 +304,12 @@ paths:
               properties:
                 idToken:
                   type: string
-                  example: "eyJhbGciOiJSUzI1NiIs..."
+                  example: 'eyJhbGciOiJSUzI1NiIs...'
                 role:
                   type: string
                   enum: [student, tutor, admin]
       responses:
-        "200":
+        '200':
           description: Successful login with Google
           content:
             application/json:
@@ -317,7 +317,7 @@ paths:
                 type: object
                 properties:
                   user:
-                    $ref: "#/components/schemas/User"
+                    $ref: '#/components/schemas/User'
                   tokens:
                     type: object
                     properties:
@@ -325,5 +325,5 @@ paths:
                         type: string
                       refreshToken:
                         type: string
-        "401":
+        '401':
           description: Invalid Google ID token
