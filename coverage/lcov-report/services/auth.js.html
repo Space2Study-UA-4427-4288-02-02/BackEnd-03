@@ -1,61 +1,68 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Code coverage report for services/auth.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type="text/css">
-      .coverage-summary .sorter {
-        background-image: url(../sort-arrow-sprite.png);
-      }
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
     </style>
-  </head>
-
-  <body>
-    <div class="wrapper">
-      <div class="pad1">
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
         <h1><a href="../index.html">All files</a> / <a href="index.html">services</a> auth.js</h1>
-        <div class="clearfix">
-          <div class="fl pad1y space-right2">
-            <span class="strong">51.72% </span>
-            <span class="quiet">Statements</span>
-            <span class="fraction">45/87</span>
-          </div>
-
-          <div class="fl pad1y space-right2">
-            <span class="strong">44.23% </span>
-            <span class="quiet">Branches</span>
-            <span class="fraction">23/52</span>
-          </div>
-
-          <div class="fl pad1y space-right2">
-            <span class="strong">55.55% </span>
-            <span class="quiet">Functions</span>
-            <span class="fraction">5/9</span>
-          </div>
-
-          <div class="fl pad1y space-right2">
-            <span class="strong">53.84% </span>
-            <span class="quiet">Lines</span>
-            <span class="fraction">42/78</span>
-          </div>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">51.72% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>45/87</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">44.23% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>23/52</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">55.55% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>5/9</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">53.84% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>42/78</span>
+            </div>
+        
+            
         </div>
         <p class="quiet">
-          Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the
-          previous block.
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
         <template id="filterTemplate">
-          <div class="quiet">
-            Filter:
-            <input oninput="onInput()" type="search" id="fileSearch" />
-          </div>
+            <div class="quiet">
+                Filter:
+                <input oninput="onInput()" type="search" id="fileSearch">
+            </div>
         </template>
-      </div>
-      <div class="status-line medium"></div>
-      <pre><table class="coverage">
+    </div>
+    <div class='status-line medium'></div>
+    <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -406,11 +413,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { encrypt, compare } = require('~/utils/cryptHelper');
-const tokenService = require('~/services/token');
-const emailService = require('~/services/email');
-const { getUserByEmail, createUser, privateUpdateUser, getUserById } = require('~/services/user');
-const { createError } = require('~/utils/errorsHelper');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { encrypt, compare } = require('~/utils/cryptHelper')
+const tokenService = require('~/services/token')
+const emailService = require('~/services/email')
+const { getUserByEmail, createUser, privateUpdateUser, getUserById } = require('~/services/user')
+const { createError } = require('~/utils/errorsHelper')
 const {
   EMAIL_NOT_CONFIRMED,
   INCORRECT_CREDENTIALS,
@@ -418,15 +425,15 @@ const {
   BAD_CONFIRM_TOKEN,
   BAD_REFRESH_TOKEN,
   USER_NOT_FOUND,
-  ALREADY_REGISTERED,
-} = require('~/consts/errors');
-const emailSubject = require('~/consts/emailSubject');
+  ALREADY_REGISTERED
+} = require('~/consts/errors')
+const emailSubject = require('~/consts/emailSubject')
 const {
-  tokenNames: { REFRESH_TOKEN, RESET_TOKEN, CONFIRM_TOKEN },
-} = require('~/consts/auth');
+  tokenNames: { REFRESH_TOKEN, RESET_TOKEN, CONFIRM_TOKEN }
+} = require('~/consts/auth')
 &nbsp;
-const { OAuth2Client } = require('google-auth-library');
-const User = require('~/models/User');
+const { OAuth2Client } = require('google-auth-library')
+const User = require('~/models/User')
 &nbsp;
 function getOAuthClient() {
   <span class="missing-if-branch" title="if path not taken" >I</span>if (
@@ -435,128 +442,128 @@ function getOAuthClient() {
     Array.isArray(OAuth2Client.mock.instances) &amp;&amp;
     OAuth2Client.mock.instances.length
   ) {
-<span class="cstat-no" title="statement not covered" >    return OAuth2Client.mock.instances[OAuth2Client.mock.instances.length - 1];</span>
+<span class="cstat-no" title="statement not covered" >    return OAuth2Client.mock.instances[OAuth2Client.mock.instances.length - 1]</span>
   }
-  return new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  return new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 }
 &nbsp;
 const authService = {
   // ------------------ СТАРІ МЕТОДИ ------------------
   signup: async (role, firstName, lastName, email, password, language) =&gt; {
-    const existingUser = await getUserByEmail(email);
+    const existingUser = await getUserByEmail(email)
     if (existingUser) {
-      throw createError(409, ALREADY_REGISTERED);
+      throw createError(409, ALREADY_REGISTERED)
     }
 &nbsp;
-    const user = await createUser(role, firstName, lastName, email, encrypt(password), language);
+    const user = await createUser(role, firstName, lastName, email, encrypt(password), language)
 &nbsp;
-    const confirmToken = tokenService.generateConfirmToken({ id: user._id, role });
-    await tokenService.saveToken(user._id, confirmToken, CONFIRM_TOKEN);
-    await emailService.sendEmail(email, emailSubject.EMAIL_CONFIRMATION, language, { confirmToken, email, firstName });
+    const confirmToken = tokenService.generateConfirmToken({ id: user._id, role })
+    await tokenService.saveToken(user._id, confirmToken, CONFIRM_TOKEN)
+    await emailService.sendEmail(email, emailSubject.EMAIL_CONFIRMATION, language, { confirmToken, email, firstName })
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return {</span>
       userId: user._id,
-      userEmail: user.email,
-    };
+      userEmail: user.email
+    }
   },
 &nbsp;
   login: <span class="fstat-no" title="function not covered" >as</span>ync (email, password, isFromGoogle = <span class="branch-0 cbranch-no" title="branch not covered" >false)</span> =&gt; {
-    const user = <span class="cstat-no" title="statement not covered" >await getUserByEmail(email);</span>
-<span class="cstat-no" title="statement not covered" >    if (!user) <span class="cstat-no" title="statement not covered" >throw createError(401, USER_NOT_FOUND);</span></span>
+    const user = <span class="cstat-no" title="statement not covered" >await getUserByEmail(email)</span>
+<span class="cstat-no" title="statement not covered" >    if (!user) <span class="cstat-no" title="statement not covered" >throw createError(401, USER_NOT_FOUND)</span></span>
 &nbsp;
-    const checkedPassword = <span class="cstat-no" title="statement not covered" >compare(password, user.password) || isFromGoogle;</span>
-<span class="cstat-no" title="statement not covered" >    if (!checkedPassword) <span class="cstat-no" title="statement not covered" >throw createError(401, INCORRECT_CREDENTIALS);</span></span>
+    const checkedPassword = <span class="cstat-no" title="statement not covered" >compare(password, user.password) || isFromGoogle</span>
+<span class="cstat-no" title="statement not covered" >    if (!checkedPassword) <span class="cstat-no" title="statement not covered" >throw createError(401, INCORRECT_CREDENTIALS)</span></span>
 &nbsp;
-    const { _id, lastLoginAs, isFirstLogin, isEmailConfirmed } = <span class="cstat-no" title="statement not covered" >user;</span>
-<span class="cstat-no" title="statement not covered" >    if (!isEmailConfirmed) <span class="cstat-no" title="statement not covered" >throw createError(401, EMAIL_NOT_CONFIRMED);</span></span>
+    const { _id, lastLoginAs, isFirstLogin, isEmailConfirmed } = <span class="cstat-no" title="statement not covered" >user</span>
+<span class="cstat-no" title="statement not covered" >    if (!isEmailConfirmed) <span class="cstat-no" title="statement not covered" >throw createError(401, EMAIL_NOT_CONFIRMED)</span></span>
 &nbsp;
-    const tokens = <span class="cstat-no" title="statement not covered" >tokenService.generateTokens({ id: _id, role: lastLoginAs, isFirstLogin });</span>
-<span class="cstat-no" title="statement not covered" >    await tokenService.saveToken(_id, tokens.refreshToken, REFRESH_TOKEN);</span>
+    const tokens = <span class="cstat-no" title="statement not covered" >tokenService.generateTokens({ id: _id, role: lastLoginAs, isFirstLogin })</span>
+<span class="cstat-no" title="statement not covered" >    await tokenService.saveToken(_id, tokens.refreshToken, REFRESH_TOKEN)</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (isFirstLogin) {</span>
-<span class="cstat-no" title="statement not covered" >      await privateUpdateUser(_id, { isFirstLogin: false });</span>
+<span class="cstat-no" title="statement not covered" >      await privateUpdateUser(_id, { isFirstLogin: false })</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    await privateUpdateUser(_id, { lastLogin: new Date() });</span>
-<span class="cstat-no" title="statement not covered" >    return tokens;</span>
+<span class="cstat-no" title="statement not covered" >    await privateUpdateUser(_id, { lastLogin: new Date() })</span>
+<span class="cstat-no" title="statement not covered" >    return tokens</span>
   },
 &nbsp;
   logout: <span class="fstat-no" title="function not covered" >as</span>ync (refreshToken) =&gt; {
-<span class="cstat-no" title="statement not covered" >    await tokenService.removeRefreshToken(refreshToken);</span>
+<span class="cstat-no" title="statement not covered" >    await tokenService.removeRefreshToken(refreshToken)</span>
   },
 &nbsp;
   refreshAccessToken: <span class="fstat-no" title="function not covered" >as</span>ync (refreshToken) =&gt; {
-    const tokenData = <span class="cstat-no" title="statement not covered" >tokenService.validateRefreshToken(refreshToken);</span>
-    const tokenFromDB = <span class="cstat-no" title="statement not covered" >await tokenService.findToken(refreshToken, REFRESH_TOKEN);</span>
+    const tokenData = <span class="cstat-no" title="statement not covered" >tokenService.validateRefreshToken(refreshToken)</span>
+    const tokenFromDB = <span class="cstat-no" title="statement not covered" >await tokenService.findToken(refreshToken, REFRESH_TOKEN)</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!tokenData || !tokenFromDB) <span class="cstat-no" title="statement not covered" >throw createError(400, BAD_REFRESH_TOKEN);</span></span>
+<span class="cstat-no" title="statement not covered" >    if (!tokenData || !tokenFromDB) <span class="cstat-no" title="statement not covered" >throw createError(400, BAD_REFRESH_TOKEN)</span></span>
 &nbsp;
-    const { _id, lastLoginAs, isFirstLogin } = <span class="cstat-no" title="statement not covered" >await getUserById(tokenData.id);</span>
+    const { _id, lastLoginAs, isFirstLogin } = <span class="cstat-no" title="statement not covered" >await getUserById(tokenData.id)</span>
 &nbsp;
-    const tokens = <span class="cstat-no" title="statement not covered" >tokenService.generateTokens({ id: _id, role: lastLoginAs, isFirstLogin });</span>
-<span class="cstat-no" title="statement not covered" >    await tokenService.saveToken(_id, tokens.refreshToken, REFRESH_TOKEN);</span>
+    const tokens = <span class="cstat-no" title="statement not covered" >tokenService.generateTokens({ id: _id, role: lastLoginAs, isFirstLogin })</span>
+<span class="cstat-no" title="statement not covered" >    await tokenService.saveToken(_id, tokens.refreshToken, REFRESH_TOKEN)</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return tokens;</span>
+<span class="cstat-no" title="statement not covered" >    return tokens</span>
   },
 &nbsp;
   sendResetPasswordEmail: async (email, language) =&gt; {
-    const user = await getUserByEmail(email);
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (!user) throw createError(404, USER_NOT_FOUND);
+    const user = await getUserByEmail(email)
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!user) throw createError(404, USER_NOT_FOUND)
 &nbsp;
-    const { _id, firstName } = <span class="cstat-no" title="statement not covered" >user;</span>
-    const resetToken = <span class="cstat-no" title="statement not covered" >tokenService.generateResetToken({ id: _id, firstName, email });</span>
-<span class="cstat-no" title="statement not covered" >    await tokenService.saveToken(_id, resetToken, RESET_TOKEN);</span>
+    const { _id, firstName } = <span class="cstat-no" title="statement not covered" >user</span>
+    const resetToken = <span class="cstat-no" title="statement not covered" >tokenService.generateResetToken({ id: _id, firstName, email })</span>
+<span class="cstat-no" title="statement not covered" >    await tokenService.saveToken(_id, resetToken, RESET_TOKEN)</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    await emailService.sendEmail(email, emailSubject.RESET_PASSWORD, language, { resetToken, email, firstName });</span>
+<span class="cstat-no" title="statement not covered" >    await emailService.sendEmail(email, emailSubject.RESET_PASSWORD, language, { resetToken, email, firstName })</span>
   },
 &nbsp;
   updatePassword: async (resetToken, password, language) =&gt; {
-    const tokenData = tokenService.validateResetToken(resetToken);
-    const tokenFromDB = await tokenService.findToken(resetToken, RESET_TOKEN);
+    const tokenData = tokenService.validateResetToken(resetToken)
+    const tokenFromDB = await tokenService.findToken(resetToken, RESET_TOKEN)
 &nbsp;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (!tokenData || <span class="branch-1 cbranch-no" title="branch not covered" >!tokenFromDB)</span> throw createError(400, BAD_RESET_TOKEN);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!tokenData || <span class="branch-1 cbranch-no" title="branch not covered" >!tokenFromDB)</span> throw createError(400, BAD_RESET_TOKEN)
 &nbsp;
-    const { id: userId, firstName, email } = <span class="cstat-no" title="statement not covered" >tokenData;</span>
-<span class="cstat-no" title="statement not covered" >    await privateUpdateUser(userId, { password: encrypt(password) });</span>
+    const { id: userId, firstName, email } = <span class="cstat-no" title="statement not covered" >tokenData</span>
+<span class="cstat-no" title="statement not covered" >    await privateUpdateUser(userId, { password: encrypt(password) })</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    await tokenService.removeResetToken(userId);</span>
+<span class="cstat-no" title="statement not covered" >    await tokenService.removeResetToken(userId)</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    await emailService.sendEmail(email, emailSubject.SUCCESSFUL_PASSWORD_RESET, language, { firstName });</span>
+<span class="cstat-no" title="statement not covered" >    await emailService.sendEmail(email, emailSubject.SUCCESSFUL_PASSWORD_RESET, language, { firstName })</span>
   },
 &nbsp;
   confirmEmail: <span class="fstat-no" title="function not covered" >as</span>ync (token) =&gt; {
-    const tokenData = <span class="cstat-no" title="statement not covered" >tokenService.validateConfirmToken(token);</span>
-    const tokenFromDB = <span class="cstat-no" title="statement not covered" >await tokenService.findToken(token, CONFIRM_TOKEN);</span>
+    const tokenData = <span class="cstat-no" title="statement not covered" >tokenService.validateConfirmToken(token)</span>
+    const tokenFromDB = <span class="cstat-no" title="statement not covered" >await tokenService.findToken(token, CONFIRM_TOKEN)</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!tokenData || !tokenFromDB) <span class="cstat-no" title="statement not covered" >throw createError(400, BAD_CONFIRM_TOKEN);</span></span>
+<span class="cstat-no" title="statement not covered" >    if (!tokenData || !tokenFromDB) <span class="cstat-no" title="statement not covered" >throw createError(400, BAD_CONFIRM_TOKEN)</span></span>
 &nbsp;
-    const { id: userId } = <span class="cstat-no" title="statement not covered" >tokenData;</span>
-<span class="cstat-no" title="statement not covered" >    await privateUpdateUser(userId, { isEmailConfirmed: true });</span>
-<span class="cstat-no" title="statement not covered" >    await tokenService.removeConfirmToken(token);</span>
+    const { id: userId } = <span class="cstat-no" title="statement not covered" >tokenData</span>
+<span class="cstat-no" title="statement not covered" >    await privateUpdateUser(userId, { isEmailConfirmed: true })</span>
+<span class="cstat-no" title="statement not covered" >    await tokenService.removeConfirmToken(token)</span>
   },
   async googleAuth(idToken, role = <span class="branch-0 cbranch-no" title="branch not covered" >'student')</span> {
-    const client = getOAuthClient();
-    let payload;
+    const client = getOAuthClient()
+    let payload
 &nbsp;
     try {
       const ticket = await client.verifyIdToken({
         idToken,
-        audience: process.env.GOOGLE_CLIENT_ID,
-      });
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (!ticket || typeof ticket.getPayload !== 'function') <span class="cstat-no" title="statement not covered" >throw new Error('Invalid Google token');</span>
-      payload = ticket.getPayload();
+        audience: process.env.GOOGLE_CLIENT_ID
+      })
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!ticket || typeof ticket.getPayload !== 'function') <span class="cstat-no" title="statement not covered" >throw new Error('Invalid Google token')</span>
+      payload = ticket.getPayload()
     } catch (err) {
-      throw new Error('Invalid Google token');
+      throw new Error('Invalid Google token')
     }
 &nbsp;
-    const { sub: googleId, email, given_name, family_name } = payload || <span class="branch-1 cbranch-no" title="branch not covered" >{};</span>
-    if (!email) throw new Error('Invalid Google token');
+    const { sub: googleId, email, given_name, family_name } = payload || <span class="branch-1 cbranch-no" title="branch not covered" >{}</span>
+    if (!email) throw new Error('Invalid Google token')
 &nbsp;
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email })
     if (!user) {
-      const safeFirstName = given_name?.replace(/[^a-zA-Z]/g, '') || <span class="branch-1 cbranch-no" title="branch not covered" >'Google';</span>
-      const safeLastName = family_name?.replace(/[^a-zA-Z]/g, '') || <span class="branch-1 cbranch-no" title="branch not covered" >'User';</span>
-      const safeRole = ['student', 'tutor', 'admin', 'superadmin'].includes(role) ? role : 'student';
+      const safeFirstName = given_name?.replace(/[^a-zA-Z]/g, '') || <span class="branch-1 cbranch-no" title="branch not covered" >'Google'</span>
+      const safeLastName = family_name?.replace(/[^a-zA-Z]/g, '') || <span class="branch-1 cbranch-no" title="branch not covered" >'User'</span>
+      const safeRole = ['student', 'tutor', 'admin', 'superadmin'].includes(role) ? role : 'student'
 &nbsp;
       user = await User.create({
         email,
@@ -568,37 +575,36 @@ const authService = {
         isGoogleAccount: true,
         isEmailConfirmed: true,
         isFirstLogin: true,
-        lastLogin: null,
-      });
+        lastLogin: null
+      })
     }
 &nbsp;
     const tokens = tokenService.generateTokens
       ? tokenService.generateTokens({ id: user._id, role: user.role, isFirstLogin: user.isFirstLogin })
-      : <span class="branch-1 cbranch-no" title="branch not covered" >{ accessToken: `access-${user._id}`, refreshToken: `refresh-${user._id}` };</span>
+      : <span class="branch-1 cbranch-no" title="branch not covered" >{ accessToken: `access-${user._id}`, refreshToken: `refresh-${user._id}` }</span>
 &nbsp;
-    return { user, tokens };
-  },
-};
+    return { user, tokens }
+  }
+}
 &nbsp;
-module.exports = authService;
+module.exports = authService
 &nbsp;</pre></td></tr></table></pre>
 
-      <div class="push"></div>
-      <!-- for sticky footer -->
-    </div>
-    <!-- /wrapper -->
-    <div class="footer quiet pad2 space-top1 center small">
-      Code coverage generated by
-      <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2025-10-08T04:48:53.350Z
-    </div>
-    <script src="../prettify.js"></script>
-    <script>
-      window.onload = function () {
-        prettyPrint()
-      }
-    </script>
-    <script src="../sorter.js"></script>
-    <script src="../block-navigation.js"></script>
-  </body>
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-10-08T05:04:45.153Z
+            </div>
+        <script src="../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
+    </body>
 </html>
+    

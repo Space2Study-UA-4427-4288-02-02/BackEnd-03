@@ -7,8 +7,8 @@ const serverSetup = require('~/initialization/serverSetup')
 
 const serverInit = async () => {
   const app = express()
-  await serverSetup(app) // тут тільки конфіг, без listen
-  const httpServer = app.listen(0) // піднімаємо тестовий сервер на рандомному порту
+  await serverSetup(app)
+  const httpServer = app.listen(0)
   return { app: request(app), server: httpServer }
 }
 

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for middlewares/validation.js</title>
+    <title>Code coverage report for utils/testUserAuth.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">middlewares</a> validation.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">utils</a> testUserAuth.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>4/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -88,59 +88,56 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-yes">68x</span>
-<span class="cline-any cline-yes">68x</span>
-<span class="cline-any cline-yes">240x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const { createError } = require('~/utils/errorsHelper')
-const { BODY_IS_NOT_DEFINED } = require('~/consts/errors')
-const { validateRequired, validateFunc } = require('~/utils/validationHelper')
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const User = require('~/models/user')
 &nbsp;
-const validationMiddleware = (schema) =&gt; {
-  return (req, _res, next) =&gt; {
-    const { body } = req
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (!body) {
-<span class="cstat-no" title="statement not covered" >      throw createError(422, BODY_IS_NOT_DEFINED)</span>
+const testUserAuthentication = async (app, testUser = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> =&gt; {
+  const qtyOfMandatorySignupFields = 5
+  if (Object.keys(testUser).length &lt; qtyOfMandatorySignupFields) {
+    testUser = {
+      role: testUser.role ? testUser.role : <span class="branch-1 cbranch-no" title="branch not covered" >'student',</span>
+      firstName: 'Tart',
+      lastName: 'Drilling',
+      email: 'tartdrilling@gmail.com',
+      password: 'Qwerty123@',
+      FAQ: { student: [{ question: 'question1', answer: 'answer1' }] },
+      isEmailConfirmed: true,
+      lastLoginAs: testUser.role ? testUser.role : <span class="branch-1 cbranch-no" title="branch not covered" >'student'</span>
     }
-&nbsp;
-    Object.entries(schema).forEach(([schemaFieldKey, schemaFieldValue]) =&gt; {
-      const reqBodyField = body[schemaFieldKey]
-      validateRequired(schemaFieldKey, schemaFieldValue?.required, reqBodyField)
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (reqBodyField) {
-        Object.entries(schemaFieldValue).forEach(([validationType, validationValue]) =&gt; {
-          validateFunc[validationType](schemaFieldKey, validationValue, reqBodyField)
-        })
-      }
-    })
-&nbsp;
-    next()
   }
+&nbsp;
+  await User.create({ ...testUser })
+&nbsp;
+  const loginUserResponse = await app.post('/auth/login').send({ email: testUser.email, password: testUser.password })
+&nbsp;
+  return loginUserResponse.body.accessToken
 }
 &nbsp;
-module.exports = validationMiddleware
+module.exports = testUserAuthentication
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -148,7 +145,7 @@ module.exports = validationMiddleware
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-08T05:04:45.153Z
+                at 2025-10-08T04:57:14.684Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -20,7 +20,7 @@ const serverSetup = async (app) => {
     })
   }
 
-  return { app, server } // повертаємо обидва
+  return { app, server }
 }
 
 module.exports = serverSetup

@@ -33,7 +33,6 @@ function getOAuthClient() {
 }
 
 const authService = {
-  // ------------------ СТАРІ МЕТОДИ ------------------
   signup: async (role, firstName, lastName, email, password, language) => {
     const existingUser = await getUserByEmail(email)
     if (existingUser) {

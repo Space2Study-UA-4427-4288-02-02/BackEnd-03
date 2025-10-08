@@ -1,9 +1,8 @@
 require('~/initialization/envSetup')
 
-// Мокаємо cryptHelper
 jest.mock('~/utils/cryptHelper', () => ({
   encrypt: jest.fn((pwd) => `encrypted-${pwd}`),
-  compare: jest.fn((pwd, _hash) => pwd === 'password123') // <-- _hash замість hash
+  compare: jest.fn((pwd, _hash) => pwd === 'password123')
 }))
 
 // Мокаємо User модель
@@ -14,7 +13,6 @@ jest.mock('~/models/User', () => ({
 }))
 const User = require('~/models/User')
 
-// Мок Google OAuth2Client
 const mockVerifyIdToken = jest.fn()
 jest.mock('google-auth-library', () => ({
   OAuth2Client: jest.fn(() => ({
@@ -22,8 +20,7 @@ jest.mock('google-auth-library', () => ({
   }))
 }))
 
-// Після моків імпортуємо сервіс
-const authService = require('~/services/auth') // auth.js
+const authService = require('~/services/auth')
 
 describe('Google Auth Service', () => {
   beforeEach(() => {
