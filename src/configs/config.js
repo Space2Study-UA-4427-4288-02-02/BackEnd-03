@@ -35,4 +35,10 @@ const azureAccess = {
   AZURE_HOST: process.env.AZURE_HOST
 }
 
-module.exports = { config, gmailCredentials, superAdmin, azureAccess }
+const cloudinaryConfig = {
+  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET
+}
+
+module.exports = { config, gmailCredentials, superAdmin, azureAccess, cloudinaryConfig }

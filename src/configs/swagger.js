@@ -16,7 +16,14 @@ const swaggerOptions = {
       }
     ],
     components: {
-      securitySchemes: {}
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Enter the token with the `Bearer: ` prefix, e.g. "Bearer abcde12345".'
+        }
+      }
     }
   },
   apis: ['./src/docs/*.yaml']

@@ -1,6 +1,9 @@
 const userService = require('~/services/user')
 const { createForbiddenError } = require('~/utils/errorsHelper')
 const createAggregateOptions = require('~/utils/users/createAggregateOptions')
+const { createError } = require('~/utils/errorsHelper')
+const { INTERNAL_SERVER_ERROR, NO_FILE_UPLOADED } = require('~/consts/errors')
+const { upload } = require('~/utils/uploadHelper')
 
 const getUsers = async (req, res) => {
   const { skip, limit, sort, match } = createAggregateOptions(req.query)
@@ -31,6 +34,30 @@ const updateUser = async (req, res) => {
   res.status(204).end()
 }
 
+const uploadPhoto = async (req, res) => {
+  const { id } = req.params
+
+  if (id !== req.user.id) throw createForbiddenError()
+
+  if (!req.file) {
+    return createError(400, NO_FILE_UPLOADED)
+  }
+
+  upload(req.file.buffer, async (error, result) => {
+    if (error) {
+      return res.status(500).json({
+        status: 500,
+        code: INTERNAL_SERVER_ERROR.code,
+        message: 'Error uploading to Cloudinary'
+      })
+    }
+
+    await userService.privateUpdateUser(id, { photo: result.secure_url })
+
+    res.status(204).end()
+  })
+}
+
 const updateStatus = async (req, res) => {
   const { id } = req.params
   const updateData = req.body
@@ -53,5 +80,6 @@ module.exports = {
   getUserById,
   deleteUser,
   updateUser,
-  updateStatus
+  updateStatus,
+  uploadPhoto
 }
