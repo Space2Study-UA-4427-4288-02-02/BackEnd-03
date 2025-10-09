@@ -10,6 +10,10 @@ const User = require('~/models/user')
 const {
   roles: { ADMIN }
 } = require('~/consts/auth')
+const multer = require('multer')
+
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 const params = [{ model: User, idName: 'id' }]
 
@@ -20,6 +24,12 @@ router.param('id', idValidation)
 router.get('/', asyncWrapper(userController.getUsers))
 router.get('/:id', isEntityValid({ params }), asyncWrapper(userController.getUserById))
 router.patch('/:id', isEntityValid({ params }), asyncWrapper(userController.updateUser))
+router.patch(
+  '/:id/uploadPhoto',
+  isEntityValid({ params }),
+  upload.single('image'),
+  asyncWrapper(userController.uploadPhoto)
+)
 
 router.use(restrictTo(ADMIN))
 router.patch('/:id/change-status', isEntityValid({ params }), asyncWrapper(userController.updateStatus))

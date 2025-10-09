@@ -11,6 +11,6 @@ const uploadImageController = require('~/controllers/uploadImage')
 
 router.use(authMiddleware)
 
-router.post('/', upload.single('image'), asyncWrapper(uploadImageController.upload))
+router.post('/', upload.single('image'), asyncWrapper(uploadImageController.uploadImage))
 
 module.exports = router

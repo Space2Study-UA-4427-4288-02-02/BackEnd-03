@@ -1,0 +1,47 @@
+paths:
+  /users/{id}/uploadPhoto:
+    patch:
+      tags:
+        - UploadPhoto
+      summary: Upload an user photo
+      description: Uploads an image to Cloudinary and set to user.
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Provide the image file to upload.
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: The file to upload.
+      responses:
+        204:
+          description: Uploaded
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 400
+                code: 'NO_FILE_UPLOADED'
+                message: 'No file was uploaded.'
