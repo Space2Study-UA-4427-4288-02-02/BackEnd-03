@@ -6,7 +6,7 @@ const {
 const {
   tokenNames: { REFRESH_TOKEN, ACCESS_TOKEN }
 } = require('~/consts/auth')
-
+const { createError } = require('~/utils/errorsHelper')
 const COOKIE_OPTIONS = {
   maxAge: oneDayInMs,
   httpOnly: true,
@@ -94,6 +94,16 @@ const confirmEmail = async (req, res) => {
   res.status(204).end()
 }
 
+const googleAuth = async (req, res) => {
+  const { idToken, role } = req.body
+  if (!idToken) {
+    throw createError(400, 'idToken is required')
+  }
+
+  const response = await authService.googleAuth(idToken, role)
+  res.json(response)
+}
+
 module.exports = {
   signup,
   login,
@@ -101,5 +111,6 @@ module.exports = {
   refreshAccessToken,
   sendResetPasswordEmail,
   updatePassword,
-  confirmEmail
+  confirmEmail,
+  googleAuth
 }
