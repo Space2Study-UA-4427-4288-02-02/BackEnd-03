@@ -61,14 +61,16 @@ const uploadPhoto = async (req, res) => {
     await userService.privateUpdateUser(id, { photo: result.secure_url })
 
     try {
-      await imageService.deleteImageByUrl(photo)
+      if (photo) {
+        await imageService.deleteImageByUrl(photo)
+      }
     } catch (err) {
       logger.error(err)
 
       return res.status(500).json({
         status: 500,
         code: INTERNAL_SERVER_ERROR.code,
-        message: 'Error destroing from Cloudinary'
+        message: 'Error destroying from Cloudinary'
       })
     }
 
