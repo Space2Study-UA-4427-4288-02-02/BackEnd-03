@@ -100,7 +100,7 @@ const errors = {
     message: `The language name is invalid. Possible options: ${APP_LANG_ENUM.join(', ')}.`
   },
   CATEGORY_NAME_NOT_UNIQUE: {
-    code: 'CATEGORY_NAME_NOT_UNIQUEE',
+    code: 'CATEGORY_NAME_NOT_UNIQUE',
     message: 'Category name not unique.'
   },
   DOCUMENT_NOT_FOUND: (document) => ({
@@ -108,7 +108,6 @@ const errors = {
     message: `${document} with the specified ${document.length > 1 ? 'IDs were' : 'ID was'} not found.`
   }),
   FIELD_CANNOT_BE_EMPTY: (field) => `The ${field} field cannot be empty.`,
-  FIELD_MUST_BE_UNIQUE: (field) => `The ${field} field must be unique.`,
   FIELD_MUST_BE_SELECTED: (field) => `${field[0].toUpperCase() + field.slice(1)} must be selected.`,
   ENUM_CAN_BE_ONE_OF: (field, enums) =>
     `${field[0].toUpperCase() + field.slice(1)} can be either of these: ${enums.toString()}`,

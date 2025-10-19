@@ -3,6 +3,9 @@ const router = require('express').Router()
 const langMiddleware = require('~/middlewares/appLanguage')
 const asyncWrapper = require('~/middlewares/asyncWrapper')
 const { restrictTo, authMiddleware } = require('~/middlewares/auth')
+const validationMiddleware = require('~/middlewares/validation')
+
+const cateogryValidationSchema = require('~/validation/schemas/category')
 
 const categoryController = require('~/controllers/category')
 const {
@@ -14,6 +17,11 @@ router.get('/', langMiddleware, asyncWrapper(categoryController.getCategories))
 router.get('/names', langMiddleware, asyncWrapper(categoryController.getCategoriesNames))
 
 router.use(restrictTo(ADMIN, SUPERADMIN))
-router.post('/', langMiddleware, asyncWrapper(categoryController.createCategory))
+router.post(
+  '/',
+  validationMiddleware(cateogryValidationSchema),
+  langMiddleware,
+  asyncWrapper(categoryController.createCategory)
+)
 
 module.exports = router
