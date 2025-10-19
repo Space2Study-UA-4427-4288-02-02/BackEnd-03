@@ -1,0 +1,192 @@
+paths:
+  /categories:
+    post:
+      tags:
+        - Category
+      summary: Create Category
+      description: Add new category.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: Provide required data to create category.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: name
+                  example: category name
+                appearance:
+                  type: object
+                  properties:
+                    icon:
+                      type: string
+                      description: icon
+                      example: icon
+                    color:
+                      type: string
+                      description: color
+                      example: color
+                  required:
+                    - icon
+                    - color
+              required:
+                - name
+            example:
+              name: category name
+              appearance:
+                icon: icon
+                color: color
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: name
+                    example: category name
+                  appearance:
+                    type: object
+                    properties:
+                      icon:
+                        type: string
+                        description: icon
+                        example: icon
+                      color:
+                        type: string
+                        description: color
+                        example: color
+                    required:
+                      - icon
+                      - color
+                required:
+                  - name
+              example:
+                name: category name
+                appearance:
+                  icon: icon
+                  color: color
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 400
+                code: 'CATEGORY_NAME_NOT_UNIQUE'
+                message: 'Category name not unique.'
+    get:
+      tags:
+        - Category
+      summary: Get Category List
+      description: Get Category List.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    appearance:
+                      type: object
+                      properties:
+                        icon:
+                          type: string
+                        color:
+                          type: string
+              example:
+                - _id: 'a8f14016a65d17c0d22001ad'
+                  name: name1
+                  appearance:
+                    icon: 'icon'
+                    color: 'color'
+                - _id: 'b8f14016a65d17c0d22001ad'
+                  name: name2
+                  appearance:
+                    icon: 'icon'
+                    color: 'color'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 400
+                code: 'UNAUTHORIZED'
+                message: 'The requested URL requires user authorization.'
+  /categories/names:
+    get:
+      tags:
+        - Category
+      summary: Get Category Names List
+      description: Get Category Names List.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+              example:
+                - _id: 'a8f14016a65d17c0d22001ad'
+                  name: name1
+                - _id: 'b8f14016a65d17c0d22001ad'
+                  name: name2
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 400
+                code: 'UNAUTHORIZED'
+                message: 'The requested URL requires user authorization.'
