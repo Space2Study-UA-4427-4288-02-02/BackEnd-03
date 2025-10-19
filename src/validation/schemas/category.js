@@ -1,4 +1,4 @@
-const confirmEmailValidationSchema = {
+const cateogoryValidationSchema = {
   name: {
     type: 'string',
     required: true
@@ -9,4 +9,4 @@ const confirmEmailValidationSchema = {
   }
 }
 
-module.exports = confirmEmailValidationSchema
+module.exports = cateogoryValidationSchema

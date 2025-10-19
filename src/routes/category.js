@@ -5,7 +5,7 @@ const asyncWrapper = require('~/middlewares/asyncWrapper')
 const { restrictTo, authMiddleware } = require('~/middlewares/auth')
 const validationMiddleware = require('~/middlewares/validation')
 
-const cateogryValidationSchema = require('~/validation/schemas/category')
+const cateogoryValidationSchema = require('~/validation/schemas/category')
 
 const categoryController = require('~/controllers/category')
 const {
@@ -19,7 +19,7 @@ router.get('/names', langMiddleware, asyncWrapper(categoryController.getCategori
 router.use(restrictTo(ADMIN, SUPERADMIN))
 router.post(
   '/',
-  validationMiddleware(cateogryValidationSchema),
+  validationMiddleware(cateogoryValidationSchema),
   langMiddleware,
   asyncWrapper(categoryController.createCategory)
 )
