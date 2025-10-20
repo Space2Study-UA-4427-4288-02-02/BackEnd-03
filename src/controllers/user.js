@@ -1,9 +1,11 @@
 const userService = require('~/services/user')
+const imageService = require('~/services/image')
 const { createForbiddenError } = require('~/utils/errorsHelper')
 const createAggregateOptions = require('~/utils/users/createAggregateOptions')
 const { createError } = require('~/utils/errorsHelper')
 const { INTERNAL_SERVER_ERROR, NO_FILE_UPLOADED } = require('~/consts/errors')
 const { upload } = require('~/utils/uploadHelper')
+const logger = require('~/logger/logger')
 
 const getUsers = async (req, res) => {
   const { skip, limit, sort, match } = createAggregateOptions(req.query)
@@ -52,7 +54,25 @@ const uploadPhoto = async (req, res) => {
       })
     }
 
+    await imageService.addImage(result.public_id, result.secure_url, id)
+
+    const { photo } = await userService.getUserById(id)
+
     await userService.privateUpdateUser(id, { photo: result.secure_url })
+
+    try {
+      if (photo) {
+        await imageService.deleteImageByUrl(photo)
+      }
+    } catch (err) {
+      logger.error(err)
+
+      return res.status(500).json({
+        status: 500,
+        code: INTERNAL_SERVER_ERROR.code,
+        message: 'Error destroying from Cloudinary'
+      })
+    }
 
     res.status(204).end()
   })
