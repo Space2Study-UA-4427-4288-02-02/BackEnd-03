@@ -62,6 +62,38 @@ const userService = {
     })
   },
 
+  createGoogleUser: async (
+    email,
+    firstName,
+    lastName,
+    role,
+    googleId,
+    password,
+    isGoogleAccount,
+    isEmailConfirmed,
+    isFirstLogin,
+    lastLogin
+  ) => {
+    const duplicateUser = await userService.getUserByEmail(email)
+
+    if (duplicateUser) {
+      throw createError(409, ALREADY_REGISTERED)
+    }
+
+    return await User.create({
+      email,
+      firstName,
+      lastName,
+      role,
+      googleId,
+      password,
+      isGoogleAccount,
+      isEmailConfirmed,
+      isFirstLogin,
+      lastLogin
+    })
+  },
+
   privateUpdateUser: async (id, param) => {
     const user = await User.findByIdAndUpdate(id, param, { new: true }).exec()
 

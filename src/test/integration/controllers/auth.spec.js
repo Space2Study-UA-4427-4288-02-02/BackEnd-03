@@ -8,11 +8,18 @@ const tokenService = require('~/services/token')
 const Token = require('~/models/token')
 const { expectError } = require('~/test/helpers')
 
+jest.mock('google-auth-library', () => ({
+  OAuth2Client: jest.fn()
+}))
+
+jest.mock('~/services/user')
+jest.mock('~/services/token')
+
 describe('Auth controller', () => {
   let app, server, signupResponse
 
   beforeAll(async () => {
-    ; ({ app, server } = await serverInit())
+    ;({ app, server } = await serverInit())
   })
 
   beforeEach(async () => {

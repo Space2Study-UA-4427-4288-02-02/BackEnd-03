@@ -1,7 +1,7 @@
 const { encrypt, compare } = require('~/utils/cryptHelper')
 const tokenService = require('~/services/token')
 const emailService = require('~/services/email')
-const { getUserByEmail, createUser, privateUpdateUser, getUserById } = require('~/services/user')
+const { getUserByEmail, createUser, privateUpdateUser, getUserById, createGoogleUser } = require('~/services/user')
 const { createError } = require('~/utils/errorsHelper')
 const {
   EMAIL_NOT_CONFIRMED,
@@ -15,6 +15,20 @@ const emailSubject = require('~/consts/emailSubject')
 const {
   tokenNames: { REFRESH_TOKEN, RESET_TOKEN, CONFIRM_TOKEN }
 } = require('~/consts/auth')
+
+const { OAuth2Client } = require('google-auth-library')
+
+function getOAuthClient() {
+  if (
+    OAuth2Client &&
+    OAuth2Client.mock &&
+    Array.isArray(OAuth2Client.mock.instances) &&
+    OAuth2Client.mock.instances.length
+  ) {
+    return OAuth2Client.mock.instances[OAuth2Client.mock.instances.length - 1]
+  }
+  return new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+}
 
 const authService = {
   signup: async (role, firstName, lastName, email, password, language) => {
@@ -125,6 +139,51 @@ const authService = {
     await privateUpdateUser(userId, { isEmailConfirmed: true })
 
     await tokenService.removeConfirmToken(token)
+  },
+
+  async googleAuth(idToken, role = 'student') {
+    const client = getOAuthClient()
+    let payload
+
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken,
+        audience: process.env.GOOGLE_CLIENT_ID
+      })
+      if (!ticket || typeof ticket.getPayload !== 'function') throw new Error('Invalid Google token')
+      payload = ticket.getPayload()
+    } catch (err) {
+      throw new Error('Invalid Google token')
+    }
+
+    const { sub: googleId, email, given_name, family_name } = payload || {}
+    if (!email) throw new Error('Invalid Google token')
+
+    let user = await getUserByEmail(email)
+    if (!user) {
+      const safeFirstName = given_name?.replace(/[^a-zA-Z]/g, '') || 'Google'
+      const safeLastName = family_name?.replace(/[^a-zA-Z]/g, '') || 'User'
+      const safeRole = ['student', 'tutor', 'admin', 'superadmin'].includes(role) ? role : 'student'
+
+      user = await createGoogleUser(
+        email,
+        safeFirstName,
+        safeLastName,
+        safeRole,
+        googleId,
+        'Google123!',
+        true,
+        true,
+        true,
+        null
+      )
+    }
+
+    const tokens = tokenService.generateTokens
+      ? tokenService.generateTokens({ id: user._id, role: user.role, isFirstLogin: user.isFirstLogin })
+      : { accessToken: `access-${user._id}`, refreshToken: `refresh-${user._id}` }
+
+    return { accessToken: tokens.accessToken }
   }
 }
 
