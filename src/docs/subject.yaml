@@ -129,8 +129,8 @@ paths:
           description: Filter subjects by categoryId
           required: false
           schema:
-          type: string
-          example: 64b8f14016a65d17c0d22001
+            type: string
+            example: 64b8f14016a65d17c0d22001
       responses:
         200:
           description: OK
