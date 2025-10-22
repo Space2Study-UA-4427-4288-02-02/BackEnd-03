@@ -56,13 +56,13 @@ const authService = {
       throw createError(401, INCORRECT_CREDENTIALS)
     }
 
-    const { _id, lastLoginAs, isFirstLogin, isEmailConfirmed } = user
+    const { _id, lastLoginAs, isFirstLogin, isEmailConfirmed, role } = user
 
     if (!isEmailConfirmed) {
       throw createError(401, EMAIL_NOT_CONFIRMED)
     }
 
-    const tokens = tokenService.generateTokens({ id: _id, role: lastLoginAs, isFirstLogin })
+    const tokens = tokenService.generateTokens({ id: _id, role: lastLoginAs || role?.[0], isFirstLogin })
     await tokenService.saveToken(_id, tokens.refreshToken, REFRESH_TOKEN)
 
     if (isFirstLogin) {

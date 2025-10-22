@@ -12,9 +12,6 @@ jest.mock('google-auth-library', () => ({
   OAuth2Client: jest.fn()
 }))
 
-jest.mock('~/services/user')
-jest.mock('~/services/token')
-
 describe('Auth controller', () => {
   let app, server, signupResponse
 

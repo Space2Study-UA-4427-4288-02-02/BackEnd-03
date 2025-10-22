@@ -1,0 +1,169 @@
+paths:
+  /subjects:
+    post:
+      tags:
+        - Subject
+      summary: Create Subject
+      description: Add new subject.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: Provide required data to create subject.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: name
+                  example: subject name
+                categoryId:
+                  type: string
+                  description: categoryId
+                  example: 64b8f14016a65d17c0d22001
+              required:
+                - name
+                - categoryId
+            example:
+              name: subject name
+              categoryId: 64b8f14016
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: name
+                    example: subject name
+                  categoryId:
+                    type: string
+                    description: categoryId
+                    example: 64b8f14016a65d17c0d22001
+                required:
+                  - name
+                  - categoryId
+              example:
+                name: subject name
+                categoryId: 64b8f1401665d17c0d22001
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 400
+                code: 'SUBJECT_NAME_NOT_UNIQUE'
+                message: 'Subject name not unique.'
+    get:
+      tags:
+        - Subject
+      summary: Get Subject List
+      description: Get Subject List.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    categoryId:
+                      type: string
+              example:
+                - _id: 'a8f14016a65d17c0d22001ad'
+                  name: name1
+                  categoryId: 64b8f14016a65d17c0d22001
+                - _id: 'b8f14016a65d17c0d22001ad'
+                  name: name2
+                  categoryId: 64b8f14016a65d17c0d22002
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 401
+                code: 'UNAUTHORIZED'
+                message: 'The requested URL requires user authorization.'
+  /subjects/names:
+    get:
+      tags:
+        - Subject
+      summary: Get Subject Names List
+      description: Get Subject Names List.
+      produces:
+        - application/json
+      parameters:
+        - name: categoryId
+          in: query
+          description: Filter subjects by categoryId
+          required: false
+          schema:
+          type: string
+          example: 64b8f14016a65d17c0d22001
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+              example:
+                - _id: 'a8f14016a65d17c0d22001ad'
+                  name: name1
+                - _id: 'b8f14016a65d17c0d22001ad'
+                  name: name2
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: 401
+                code: 'UNAUTHORIZED'
+                message: 'The requested URL requires user authorization.'
