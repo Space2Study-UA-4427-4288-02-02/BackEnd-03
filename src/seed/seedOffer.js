@@ -1,5 +1,6 @@
 const Offer = require('~/models/offer')
 const User = require('~/models/user')
+const Subject = require('~/models/subject')
 const logger = require('~/logger/logger')
 const {
   roles: { TUTOR }
@@ -10,6 +11,7 @@ const seedOffer = {
     try {
       // Знаходимо користувача з роллю tutor
       const tutor = await User.findOne({ role: TUTOR })
+      const subject = await Subject.findOne({ name: 'English' })
       if (!tutor) {
         logger.error('No tutor found in database')
         return null
@@ -24,6 +26,8 @@ const seedOffer = {
           languages: ['English', 'Ukrainian'],
           authorRole: 'tutor',
           author: tutor._id,
+          category: subject.categoryId,
+          subject: subject._id,
           status: 'active',
           FAQ: [
             {
@@ -44,6 +48,8 @@ const seedOffer = {
           languages: ['English', 'Ukrainian'],
           authorRole: 'tutor',
           author: tutor._id,
+          category: subject.categoryId,
+          subject: subject._id,
           status: 'active',
           FAQ: [
             {
@@ -60,6 +66,8 @@ const seedOffer = {
           languages: ['English'],
           authorRole: 'tutor',
           author: tutor._id,
+          category: subject.categoryId,
+          subject: subject._id,
           status: 'active',
           FAQ: [
             {
@@ -76,6 +84,8 @@ const seedOffer = {
           languages: ['English', 'Ukrainian'],
           authorRole: 'tutor',
           author: tutor._id,
+          category: subject.categoryId,
+          subject: subject._id,
           status: 'active',
           FAQ: [
             {

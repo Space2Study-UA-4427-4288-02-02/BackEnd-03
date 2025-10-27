@@ -22,7 +22,7 @@ const seedSubject = {
       // Створюємо subject
       const subjectData = {
         name: 'English',
-        category: category._id
+        categoryId: category._id
       }
 
       const subject = await Subject.create(subjectData)

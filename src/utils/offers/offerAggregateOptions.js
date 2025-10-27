@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const getRegex = require('../getRegex')
 
 const offerAggregateOptions = (query, params) => {
+  console.log(query)
+  console.log(params)
   const {
     authorRole,
     price,
@@ -9,6 +11,8 @@ const offerAggregateOptions = (query, params) => {
     rating,
     language,
     search,
+    category,
+    subject,
     languages,
     nativeLanguage,
     excludedOfferId,
@@ -25,7 +29,6 @@ const offerAggregateOptions = (query, params) => {
     const searchArray = search.trim().split(' ')
     const firstNameRegex = getRegex(searchArray[0])
     const lastNameRegex = getRegex(searchArray[1])
-
     const additionalFields = authorId
       ? [{ 'subject.name': getRegex(search) }]
       : [
@@ -67,6 +70,14 @@ const offerAggregateOptions = (query, params) => {
 
   if (status) {
     match.status = status
+  }
+
+  if (category) {
+    match.category = mongoose.Types.ObjectId(category)
+  }
+
+  if (subject) {
+    match.subject = mongoose.Types.ObjectId(subject)
   }
 
   if (nativeLanguage) {
