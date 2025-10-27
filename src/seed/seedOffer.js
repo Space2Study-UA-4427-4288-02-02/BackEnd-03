@@ -24,8 +24,6 @@ const seedOffer = {
           languages: ['English', 'Ukrainian'],
           authorRole: 'tutor',
           author: tutor._id,
-          subject: '63da8767c9ad4c9a0b0eacd3',
-          category: '63da8767c9ad4c9a0b0eacd3',
           status: 'active',
           FAQ: [
             {
@@ -46,8 +44,6 @@ const seedOffer = {
           languages: ['English', 'Ukrainian'],
           authorRole: 'tutor',
           author: tutor._id,
-          subject: '63da8767c9ad4c9a0b0eacd3',
-          category: '63da8767c9ad4c9a0b0eacd3',
           status: 'active',
           FAQ: [
             {
@@ -64,8 +60,6 @@ const seedOffer = {
           languages: ['English'],
           authorRole: 'tutor',
           author: tutor._id,
-          subject: '63da8767c9ad4c9a0b0eacd3',
-          category: '63da8767c9ad4c9a0b0eacd3',
           status: 'active',
           FAQ: [
             {
@@ -82,8 +76,6 @@ const seedOffer = {
           languages: ['English', 'Ukrainian'],
           authorRole: 'tutor',
           author: tutor._id,
-          subject: '63da8767c9ad4c9a0b0eacd3',
-          category: '63da8767c9ad4c9a0b0eacd3',
           status: 'active',
           FAQ: [
             {
