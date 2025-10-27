@@ -103,6 +103,10 @@ const errors = {
     code: 'CATEGORY_NAME_NOT_UNIQUE',
     message: 'Category name not unique.'
   },
+  SUBJECT_NAME_NOT_UNIQUE: {
+    code: 'SUBJECT_NAME_NOT_UNIQUE',
+    message: 'Subject name not unique.'
+  },
   DOCUMENT_NOT_FOUND: (document) => ({
     code: 'DOCUMENT_NOT_FOUND',
     message: `${document} with the specified ${document.length > 1 ? 'IDs were' : 'ID was'} not found.`
