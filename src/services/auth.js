@@ -13,7 +13,8 @@ const {
 } = require('~/consts/errors')
 const emailSubject = require('~/consts/emailSubject')
 const {
-  tokenNames: { REFRESH_TOKEN, RESET_TOKEN, CONFIRM_TOKEN }
+  tokenNames: { REFRESH_TOKEN, RESET_TOKEN, CONFIRM_TOKEN },
+  roles: { STUDENT }
 } = require('~/consts/auth')
 
 const { OAuth2Client } = require('google-auth-library')
@@ -56,13 +57,15 @@ const authService = {
       throw createError(401, INCORRECT_CREDENTIALS)
     }
 
-    const { _id, lastLoginAs, isFirstLogin, isEmailConfirmed } = user
+    const { _id, lastLoginAs, isFirstLogin, isEmailConfirmed, role } = user
 
     if (!isEmailConfirmed) {
       throw createError(401, EMAIL_NOT_CONFIRMED)
     }
 
-    const tokens = tokenService.generateTokens({ id: _id, role: lastLoginAs, isFirstLogin })
+    const userRole = lastLoginAs || role?.[0] || STUDENT
+
+    const tokens = tokenService.generateTokens({ id: _id, role: userRole, isFirstLogin })
     await tokenService.saveToken(_id, tokens.refreshToken, REFRESH_TOKEN)
 
     if (isFirstLogin) {
@@ -86,9 +89,11 @@ const authService = {
       throw createError(400, BAD_REFRESH_TOKEN)
     }
 
-    const { _id, lastLoginAs, isFirstLogin } = await getUserById(tokenData.id)
+    const { _id, lastLoginAs, isFirstLogin, role } = await getUserById(tokenData.id)
 
-    const tokens = tokenService.generateTokens({ id: _id, role: lastLoginAs, isFirstLogin })
+    const userRole = lastLoginAs || role?.[0] || STUDENT
+
+    const tokens = tokenService.generateTokens({ id: _id, role: userRole, isFirstLogin })
     await tokenService.saveToken(_id, tokens.refreshToken, REFRESH_TOKEN)
 
     return tokens
