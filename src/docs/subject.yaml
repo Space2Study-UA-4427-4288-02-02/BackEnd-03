@@ -99,7 +99,7 @@ paths:
                   name: name2
                   categoryId: 64b8f14016a65d17c0d22002
         400:
-          description: Bad Request
+          description: Unauthorized
           content:
             application/json:
               schema:
