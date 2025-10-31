@@ -25,12 +25,9 @@ describe('locationService', () => {
   })
 
   it('fetchCitiesByCountry should return mocked cities for UA', async () => {
-    // 1. states
     axios.get
       .mockResolvedValueOnce({ data: [{ iso2: 'KY' }, { iso2: 'LV' }] })
-      // 2. cities for KY
       .mockResolvedValueOnce({ data: [{ name: 'Kyiv' }, { name: 'Lviv' }] })
-      // 3. cities for LV
       .mockResolvedValueOnce({ data: [{ name: 'Lviv' }] })
 
     const result = await locationService.fetchCitiesByCountry('UA')
