@@ -1,5 +1,10 @@
-const getRegex = (regex = '') => ({
-  $regex: regex.length > 0 ? regex : '.*'
-})
+const getRegex = (regex = '') => {
+  const escapedRegex = regex.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+  return {
+    $regex: escapedRegex.length > 0 ? escapedRegex : '.*',
+    $options: 'i'
+  }
+}
 
 module.exports = getRegex

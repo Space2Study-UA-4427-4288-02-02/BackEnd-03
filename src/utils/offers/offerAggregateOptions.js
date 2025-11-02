@@ -2,8 +2,6 @@ const mongoose = require('mongoose')
 const getRegex = require('../getRegex')
 
 const offerAggregateOptions = (query, params) => {
-  console.log(query)
-  console.log(params)
   const {
     authorRole,
     price,
@@ -25,18 +23,27 @@ const offerAggregateOptions = (query, params) => {
 
   const match = {}
 
-  if (search) {
-    const searchArray = search.trim().split(' ')
+  let decodedSearch = search
+  if (typeof search === 'string') {
+    try {
+      decodedSearch = decodeURIComponent(search)
+    } catch {
+      decodedSearch = search
+    }
+  }
+
+  if (decodedSearch) {
+    const searchArray = decodedSearch.trim().split(' ')
     const firstNameRegex = getRegex(searchArray[0])
     const lastNameRegex = getRegex(searchArray[1])
     const additionalFields = authorId
-      ? [{ 'subject.name': getRegex(search) }]
+      ? [{ 'subject.name': getRegex(decodedSearch) }]
       : [
           { 'author.firstName': firstNameRegex, 'author.lastName': lastNameRegex },
           { 'author.firstName': lastNameRegex, 'author.lastName': firstNameRegex }
         ]
 
-    match['$or'] = [{ title: getRegex(search) }, ...additionalFields]
+    match['$or'] = [{ title: getRegex(decodedSearch) }, ...additionalFields]
   }
 
   if (authorId) {
@@ -73,11 +80,11 @@ const offerAggregateOptions = (query, params) => {
   }
 
   if (category) {
-    match.category = mongoose.Types.ObjectId(category)
+    match['category'] = mongoose.Types.ObjectId(category)
   }
 
   if (subject) {
-    match.subject = mongoose.Types.ObjectId(subject)
+    match['subject._id'] = mongoose.Types.ObjectId(subject)
   }
 
   if (nativeLanguage) {
@@ -135,7 +142,26 @@ const offerAggregateOptions = (query, params) => {
       }
     },
     {
+      $lookup: {
+        from: 'subjects',
+        localField: 'subject',
+        foreignField: '_id',
+        pipeline: [
+          {
+            $project: {
+              name: 1,
+              categoryId: 1
+            }
+          }
+        ],
+        as: 'subject'
+      }
+    },
+    {
       $unwind: '$author'
+    },
+    {
+      $unwind: '$subject'
     },
     {
       $match: match
