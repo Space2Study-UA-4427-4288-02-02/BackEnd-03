@@ -7,10 +7,15 @@ cloudinary.config({
   api_secret: cloudinaryConfig.CLOUDINARY_API_SECRET
 })
 
+const destroy = async (publicId) => {
+  return cloudinary.uploader.destroy(publicId)
+}
+
 const upload = (buffer, callback) => {
   cloudinary.uploader.upload_stream({ resource_type: 'auto' }, callback).end(buffer)
 }
 
 module.exports = {
-  upload
+  upload,
+  destroy
 }

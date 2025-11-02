@@ -41,6 +41,8 @@ const userSchema = new Schema(
       unique: true,
       lowercase: true
     },
+    googleId: { type: String, select: false },
+    isGoogleAccount: { type: Boolean, default: false },
     password: {
       type: String,
       required: [true, FIELD_CANNOT_BE_EMPTY('password')],

@@ -329,3 +329,44 @@ paths:
                 status: 400
                 code: 'BAD_CONFIRM_TOKEN'
                 message: 'Invalid confirmation token.'
+
+  /auth/google:
+    post:
+      summary: Login with Google
+      description: Authenticate user using Google ID token.
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - idToken
+                - role
+              properties:
+                idToken:
+                  type: string
+                  example: 'eyJhbGciOiJSUzI1NiIs...'
+                role:
+                  type: string
+                  enum: [student, tutor, admin]
+      responses:
+        '200':
+          description: Successful login with Google
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                  tokens:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                      refreshToken:
+                        type: string
+        '401':
+          description: Invalid Google ID token
