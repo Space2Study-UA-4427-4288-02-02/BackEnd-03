@@ -78,6 +78,22 @@ const uploadPhoto = async (req, res) => {
   })
 }
 
+const getPhoto = async (req, res) => {
+  const { id } = req.params
+  if (id !== req.user.id) throw createForbiddenError()
+  const { photo } = await userService.getUserById(id)
+  res.status(200).json({ url: photo })
+}
+
+const deletePhoto = async (req, res) => {
+  const { id } = req.params
+  if (id !== req.user.id) throw createForbiddenError()
+  const { photo } = await userService.getUserById(id)
+  await imageService.deleteImageByUrl(photo)
+  await userService.privateUpdateUser(id, { photo: null })
+  res.status(204).end()
+}
+
 const updateStatus = async (req, res) => {
   const { id } = req.params
   const updateData = req.body
@@ -101,5 +117,7 @@ module.exports = {
   deleteUser,
   updateUser,
   updateStatus,
-  uploadPhoto
+  uploadPhoto,
+  getPhoto,
+  deletePhoto
 }
