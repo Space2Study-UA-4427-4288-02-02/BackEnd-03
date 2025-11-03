@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose')
 const {
   enums: { MAIN_ROLE_ENUM, SPOKEN_LANG_ENUM, PROFICIENCY_LEVEL_ENUM, OFFER_STATUS_ENUM }
 } = require('~/consts/validation')
-const { USER, OFFER } = require('~/consts/models')
+const { USER, OFFER, CATEGORY, SUBJECT } = require('~/consts/models')
 const { ENUM_CAN_BE_ONE_OF } = require('~/consts/errors')
 
 const offerSchema = new Schema(
@@ -41,6 +41,14 @@ const offerSchema = new Schema(
     author: {
       type: Schema.Types.ObjectId,
       ref: USER
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: CATEGORY
+    },
+    subject: {
+      type: Schema.Types.ObjectId,
+      ref: SUBJECT
     },
     status: {
       type: String,
