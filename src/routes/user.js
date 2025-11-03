@@ -30,6 +30,8 @@ router.patch(
   upload.single('image'),
   asyncWrapper(userController.uploadPhoto)
 )
+router.get('/:id/photo', isEntityValid({ params }), asyncWrapper(userController.getPhoto))
+router.delete('/:id/photo', isEntityValid({ params }), asyncWrapper(userController.deletePhoto))
 
 router.use(restrictTo(ADMIN))
 router.patch('/:id/change-status', isEntityValid({ params }), asyncWrapper(userController.updateStatus))
